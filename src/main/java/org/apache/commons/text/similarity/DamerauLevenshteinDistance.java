@@ -307,4 +307,38 @@ public class DamerauLevenshteinDistance implements EditDistance<Integer> {
     public Integer getThreshold() {
         return threshold;
     }
+
+    /**
+     * Describes a raw distance score in human-readable terms.
+     *
+     * <p>
+     * PPCH-framework test addition: a genuinely branchy method used only to exercise a live
+     * installable-Action test run against this fork (see the accompanying PR description).
+     * Not intended for upstream apache/commons-text.
+     * </p>
+     *
+     * @param distance The distance value, as returned by {@link #apply(CharSequence, CharSequence)}.
+     * @return A short, human-readable description of how close the two inputs are.
+     */
+    public String describeDistance(final int distance) {
+        if (distance < 0) {
+            return "beyond threshold";
+        }
+        if (distance == 0) {
+            return "identical";
+        }
+        if (distance <= 2) {
+            if (threshold != null && distance == threshold) {
+                return "at threshold";
+            }
+            return "very close";
+        }
+        if (distance <= 5) {
+            return "close";
+        }
+        if (distance <= 10) {
+            return "somewhat different";
+        }
+        return "very different";
+    }
 }
