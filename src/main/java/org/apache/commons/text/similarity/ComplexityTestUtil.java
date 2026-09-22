@@ -106,13 +106,7 @@ public final class ComplexityTestUtil {
             score -= 15;
         }
 
-        if (hasVerifiedEmail && hasVerifiedPhone) {
-            score += 15;
-        } else if (hasVerifiedEmail || hasVerifiedPhone) {
-            score += 5;
-        } else {
-            score -= 20;
-        }
+        score = scoreCustomerExtracted(hasVerifiedEmail, hasVerifiedPhone, score);
 
         if (failedLogins > 10) {
             score -= 30;
@@ -130,6 +124,17 @@ public final class ComplexityTestUtil {
             score += 5;
         }
 
+        return score;
+    }
+
+    private int scoreCustomerExtracted(boolean hasVerifiedEmail, boolean hasVerifiedPhone, int score) {
+        if (hasVerifiedEmail && hasVerifiedPhone) {
+            score += 15;
+        } else if (hasVerifiedEmail || hasVerifiedPhone) {
+            score += 5;
+        } else {
+            score -= 20;
+        }
         return score;
     }
 }
