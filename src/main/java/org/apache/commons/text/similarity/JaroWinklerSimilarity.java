@@ -110,11 +110,26 @@ public class JaroWinklerSimilarity implements SimilarityScore<Double> {
             }
         }
         int prefix = 0;
+        String prefixQuality = "NONE";
         for (int mi = 0; mi < Math.min(4, min.length()); mi++) {
             if (!first.at(mi).equals(second.at(mi))) {
+                if (mi == 0) {
+                    prefixQuality = "NO_MATCH";
+                } else if (mi == 1) {
+                    prefixQuality = "SINGLE_CHAR";
+                } else if (mi == 2) {
+                    prefixQuality = "TWO_CHAR";
+                } else {
+                    prefixQuality = "THREE_CHAR";
+                }
                 break;
             }
             prefix++;
+        }
+        if (prefix == 4) {
+            prefixQuality = "FULL";
+        } else if (prefix == 0) {
+            prefixQuality = "EMPTY";
         }
         return new int[] { matches, halfTranspositions, prefix };
     }
