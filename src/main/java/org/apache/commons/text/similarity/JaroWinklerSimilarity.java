@@ -74,6 +74,7 @@ public class JaroWinklerSimilarity implements SimilarityScore<Double> {
             min = first;
         }
         final int range = Math.max(max.length() / 2 - 1, 0);
+        // Sliding window bound: matches only within `range` positions of each other.
         final int[] matchIndexes = new int[min.length()];
         Arrays.fill(matchIndexes, -1);
         final boolean[] matchFlags = new boolean[max.length()];
